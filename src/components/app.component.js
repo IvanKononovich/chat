@@ -30,15 +30,16 @@ class App extends Component {
     componentDidMount() {
         const socket = new WebSocket('ws://st-chat.shas.tel');
 
-        socket.onopen = function() {
-            console.log("Соединение установлено.");
+        socket.onopen = () => {
+            console.log('Соединение установлено.');
+            
             socket.send(JSON.stringify({
                 from: 'testName',
-                message: "test message",
+                message: 'test message',
             }));
           };
           
-        socket.onclose = function(event) {
+        socket.onclose = (event) => {
             if (event.wasClean) {
                 console.log('Соединение закрыто чисто');
             } else {
@@ -47,12 +48,19 @@ class App extends Component {
             console.log('Код: ' + event.code + ' причина: ' + event.reason);
         };
         
-        socket.onmessage = function(event) {
-            console.log("Получены данные " + event.data);
+        socket.onmessage = (event) => {
+            const listMessage = JSON.parse(
+                JSON.stringify(this.state.listMessage)
+            );
+            listMessage.push(...JSON.parse(event.data));
+
+            this.setState({
+                listMessage
+            });
         };
         
-        socket.onerror = function(error) {
-            console.log("Ошибка " + error.message);
+        socket.onerror = (error) => {
+            console.log('Ошибка ' + error.message);
         };
     }
 
@@ -60,8 +68,14 @@ class App extends Component {
         const nickName = this.state.isLogIn;
 
         let renderItem = <>
-            <Header nickName={ nickName } onClick={() => { this.logOut() }}/>
-            <ChatContainer onClick={() => {  }} />
+            <Header 
+                nickName={ nickName } 
+                onClick={() => { this.logOut() }}
+            />
+            <ChatContainer 
+                onClick={() => {  }} 
+                listMessage={ this.state.listMessage }
+            />
         </>;
 
         if (!nickName) {

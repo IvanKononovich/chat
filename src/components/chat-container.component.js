@@ -1,12 +1,19 @@
 import React from 'react';
+import uniqid from 'uniqid';
+
+import Message from './message.component';
 
 
 export default (props) => <>
     <main className='main'>
         <div className='container'>
             <div className='chat'>
-                <div className='chat__posts-container'>
-
+                <div className='chat__message-container'>
+                    {
+                        props.listMessage.slice(0, 10).map((item) => {
+                            return <Message {...item} key={uniqid()}/>
+                        })
+                    }
                 </div>
 
                 <form className='chat__form' action=''>
