@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/IvanKononovich/chat/static/css/main.52f5439e.chunk.css",
+    "main.js": "/IvanKononovich/chat/static/js/main.20ba986e.chunk.js",
+    "main.js.map": "/IvanKononovich/chat/static/js/main.20ba986e.chunk.js.map",
+    "runtime~main.js": "/IvanKononovich/chat/static/js/runtime~main.c3eb94af.js",
+    "runtime~main.js.map": "/IvanKononovich/chat/static/js/runtime~main.c3eb94af.js.map",
+    "static/js/2.01b2f297.chunk.js": "/IvanKononovich/chat/static/js/2.01b2f297.chunk.js",
+    "static/js/2.01b2f297.chunk.js.map": "/IvanKononovich/chat/static/js/2.01b2f297.chunk.js.map",
+    "index.html": "/IvanKononovich/chat/index.html",
+    "precache-manifest.b0addb302066ba07d6975361cf17cf5b.js": "/IvanKononovich/chat/precache-manifest.b0addb302066ba07d6975361cf17cf5b.js",
+    "service-worker.js": "/IvanKononovich/chat/service-worker.js",
+    "static/css/main.52f5439e.chunk.css.map": "/IvanKononovich/chat/static/css/main.52f5439e.chunk.css.map"
+  }
+}
