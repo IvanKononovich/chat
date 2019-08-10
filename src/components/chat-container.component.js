@@ -10,7 +10,7 @@ export default (props) => <>
             <div className='chat'>
                 <div className='chat__message-container'>
                     {
-                        props.listMessage.slice(0, 10).map((item) => {
+                        props.listMessage.map((item) => {
                             return <Message {...item} key={uniqid()}/>
                         })
                     }

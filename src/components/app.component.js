@@ -4,8 +4,10 @@ import Header from  './header.component';
 import ChatContainer from './chat-container.component';
 import LogInPopup from './log-in-popup.component';
 
+const socket = new WebSocket('ws://st-chat.shas.tel');
+
 class App extends Component {
-    state = {
+    state = { 
         isLogIn: window.localStorage.nickName,
         listMessage: [],
     }
@@ -27,16 +29,23 @@ class App extends Component {
         })
     }
 
+    sendMessage() {
+        const messageText = document.querySelector('.chat__input-fields').value;
+
+        socket.send(JSON.stringify({
+            from: this.state.isLogIn,
+            message: messageText,
+        }));
+    }
+
     componentDidMount() {
-        const socket = new WebSocket('ws://st-chat.shas.tel');
+        socket.onerror = (error) => {
+            console.log('Ошибка ' + error.message);
+        };
+        
 
         socket.onopen = () => {
             console.log('Соединение установлено.');
-            
-            socket.send(JSON.stringify({
-                from: 'testName',
-                message: 'test message',
-            }));
           };
           
         socket.onclose = (event) => {
@@ -59,9 +68,6 @@ class App extends Component {
             });
         };
         
-        socket.onerror = (error) => {
-            console.log('Ошибка ' + error.message);
-        };
     }
 
     render() {
@@ -73,7 +79,7 @@ class App extends Component {
                 onClick={() => { this.logOut() }}
             />
             <ChatContainer 
-                onClick={() => {  }} 
+                onClick={() => { this.sendMessage() }} 
                 listMessage={ this.state.listMessage }
             />
         </>;
