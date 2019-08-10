@@ -4,10 +4,12 @@ import Header from  './header.component';
 import ChatContainer from './chat-container.component';
 import LogInPopup from './log-in-popup.component';
 
+
 const socket = new WebSocket('ws://st-chat.shas.tel');
 
 class App extends Component {
     state = { 
+        isActivePage: true,
         isLogIn: window.localStorage.nickName,
         listMessage: [],
     }
@@ -29,7 +31,9 @@ class App extends Component {
         })
     }
 
-    sendMessage() {
+    sendMessage(event) {
+        event.preventDefault();
+
         const messageText = document.querySelector('.chat__input-fields').value;
 
         socket.send(JSON.stringify({
@@ -71,6 +75,19 @@ class App extends Component {
     }
 
     render() {
+        window.addEventListener('blur', () => {
+            this.setState({
+                isActivePage: false,
+            })
+        })
+        
+        window.addEventListener('focus', () => {
+            this.setState({
+                isActivePage: true,
+            })
+        })
+
+
         const nickName = this.state.isLogIn;
 
         let renderItem = <>
@@ -79,7 +96,7 @@ class App extends Component {
                 onClick={() => { this.logOut() }}
             />
             <ChatContainer 
-                onClick={() => { this.sendMessage() }} 
+                onClick={(event) => { this.sendMessage(event) }} 
                 listMessage={ this.state.listMessage }
             />
         </>;

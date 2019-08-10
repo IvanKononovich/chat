@@ -3,7 +3,10 @@ import React from 'react';
 
 export default (props) => {
     const date = new Date(props.time);
-    let time = `${date.getHours()}:${date.getMinutes()}`;
+    const hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours() < 10;
+    const minuts = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes() < 10;
+
+    let time = `${hours}:${minuts}`;
 
     return <> 
         <div className='message'>

@@ -149,7 +149,7 @@ body {
         overflow-y: scroll;
         overflow-x: hidden;
         display: flex;
-        flex-direction: column-reverse;
+        flex-direction: column;
         margin-bottom: 30px;
         border: 1px solid $color2;
         padding: 20px;
@@ -159,10 +159,6 @@ body {
 .message {
     margin-bottom: 30px;
 
-    &__row {
-        height: 30px;
-    }
-    
     &__nick-name {
         font-size: 0.7em;
         font-style: italic;
