@@ -1,7 +1,8 @@
 import React, { Component} from 'react';
 
-class App extends Component {
+import Authentication from './authentication.component';
 
+class App extends Component {
     componentDidMount() {
         const socket = new WebSocket('ws://st-chat.shas.tel');
 
@@ -32,7 +33,7 @@ class App extends Component {
     }
 
     render() {
-        return <h1 className='title'>Title</h1>
+        return <Authentication />
     }
 }
 
