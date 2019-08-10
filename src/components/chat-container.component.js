@@ -25,7 +25,7 @@ export default (props) => {
                     </div>
 
                     <form className='chat__form' action=''>
-                        <input className='chat__input-fields input' type='text' placeholder='Enter message' required/>
+                        <textarea className='chat__input-fields input' type='text' placeholder='Enter message' required></textarea>
 
                         <button className='chat__send-button button' onClick={ props.onClick }>send</button>
                     </form>
