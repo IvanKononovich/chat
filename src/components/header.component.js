@@ -1,5 +1,6 @@
 import React from 'react';
 
+import LogOut from './log-out.component';
 
 export default (props) => <>
     <header className='header'>
@@ -12,6 +13,8 @@ export default (props) => <>
                 <div className='header__column'>
                     <span className='header__description'>You are logged in as:</span>
                     <span className='header__nickname'>{props.nickName}</span>
+                    
+                    <LogOut onClick={ props.onClick } />
                 </div>
             </div>
         </div>

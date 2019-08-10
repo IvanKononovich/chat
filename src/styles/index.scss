@@ -26,17 +26,23 @@ body {
     width: 100%;
     background-color: $color2;
     color: $color1;
-    padding: 20px;
+    padding-top: 20px;
 
     &__title {
         margin: 0;
         font-size: 1.5em;
     }
 
+    &__column {
+        padding: 10px 20px;
+        padding-top: 0;
+    }
+
     &__wrapper {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        flex-wrap: wrap;
     }
     &__description {
         padding-right: 20px;
@@ -44,6 +50,24 @@ body {
     &__nickname {
         font-style: italic;
         font-weight: bold;
+        color: $color3;
+    }
+}
+
+.log-out {
+    cursor: pointer;
+    transition: color $trans-duration;
+    border: none;
+    outline: none;
+    background-color: $color1;
+    color: $color2;
+    font-size: 1em;
+    width: 150px;
+    height: 45px;
+    padding: 0;
+    margin-left: 40px;
+
+    &:hover {
         color: $color3;
     }
 }
@@ -105,5 +129,20 @@ body {
         &:hover {
             color: $color3;
         }
+    }
+}
+
+@media (max-width: 625px) {
+    body {
+        font-size: 20px;
+    }
+
+    .header__column {
+        width: 100%;
+    }
+
+    .log-out {
+        margin: 10px auto;
+        width: 100%;
     }
 }

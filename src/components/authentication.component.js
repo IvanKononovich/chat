@@ -17,11 +17,19 @@ class Authentication extends Component {
         })
     }
 
+    logOut() {
+        window.localStorage.clear();
+
+        this.setState({
+            isLogIn: null,
+        })
+    }
+
     render() {
         const nickName = this.state.isLogIn;
-        let renderItem = <Header nickName={ nickName }/>;
+        let renderItem = <Header nickName={ nickName } onClick={() => { this.logOut() }}/>;
 
-        if (nickName === undefined) {
+        if (!nickName) {
             renderItem = <LogInPopup onClick={() => { this.setNickNameEvent() }}/>
         }
 
