@@ -1,8 +1,32 @@
 import React, { Component} from 'react';
 
-import Authentication from './authentication.component';
+import Header from  './header.component';
+import ChatContainer from './chat-container.component';
+import LogInPopup from './log-in-popup.component';
 
 class App extends Component {
+    state = {
+        isLogIn: window.localStorage.nickName,
+        listMessage: [],
+    }
+
+    setNickNameEvent() {
+        const nickName = document.querySelector('.popup__name').value;
+        window.localStorage.setItem('nickName', nickName);
+
+        this.setState({
+            isLogIn: nickName,
+        })
+    }
+
+    logOut() {
+        window.localStorage.clear();
+
+        this.setState({
+            isLogIn: null,
+        })
+    }
+
     componentDidMount() {
         const socket = new WebSocket('ws://st-chat.shas.tel');
 
@@ -33,7 +57,18 @@ class App extends Component {
     }
 
     render() {
-        return <Authentication />
+        const nickName = this.state.isLogIn;
+
+        let renderItem = <>
+            <Header nickName={ nickName } onClick={() => { this.logOut() }}/>
+            <ChatContainer onClick={() => {  }} />
+        </>;
+
+        if (!nickName) {
+            renderItem = <LogInPopup onClick={() => { this.setNickNameEvent() }}/>;
+        }
+
+        return renderItem
     }
 }
 

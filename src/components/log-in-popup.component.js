@@ -6,9 +6,9 @@ export default (props) => <>
         <form className='popup__form' action=''>
             <h2 className='popup__title'>Enter your name</h2>
 
-            <input className='popup__name' type='text' placeholder='Your name' required/>
+            <input className='popup__name input' type='text' placeholder='Your name' required/>
 
-            <button className='popup__button' onClick={ props.onClick }>Ok</button>
+            <button className='popup__button button' onClick={ props.onClick }>Ok</button>
         </form>
     </div>
 </>
