@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from 'react';
 import uniqid from 'uniqid';
 
 import Message from './message.component';
-import scrollToBottom from './chat-container.helper';
+import scrollToBottom from '../helpers/chat-container.helper';
 
 
 export default (props) => {
