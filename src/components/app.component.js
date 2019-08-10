@@ -3,9 +3,8 @@ import React, { Component} from 'react';
 import Header from  './header.component';
 import ChatContainer from './chat-container.component';
 import LogInPopup from './log-in-popup.component';
+import { webSocketHelper } from '../helpers/app.helper';
 
-
-const socket = new WebSocket('ws://st-chat.shas.tel');
 
 class App extends Component {
     state = { 
@@ -36,42 +35,34 @@ class App extends Component {
 
         const messageText = document.querySelector('.chat__input-fields').value;
 
-        socket.send(JSON.stringify({
+        webSocketHelper.sendData(JSON.stringify({
             from: this.state.isLogIn,
             message: messageText,
         }));
     }
 
     componentDidMount() {
-        socket.onerror = (error) => {
-            console.log('Ошибка ' + error.message);
-        };
-        
+        webSocketHelper.initEvents({
+            onerror: (error) => {
+                console.log(error.message);
+            },
+            onopen: () => {
+                console.log('Соединение установлено.');
+            },
+            onclose: () => {
+                webSocketHelper.reconnecting(1000);
+            },
+            onmessage: (event) => {
+                const listMessage = JSON.parse(
+                    JSON.stringify(this.state.listMessage)
+                );
+                listMessage.push(...JSON.parse(event.data));
 
-        socket.onopen = () => {
-            console.log('Соединение установлено.');
-          };
-          
-        socket.onclose = (event) => {
-            if (event.wasClean) {
-                console.log('Соединение закрыто чисто');
-            } else {
-                console.log('Обрыв соединения');
-            }
-            console.log('Код: ' + event.code + ' причина: ' + event.reason);
-        };
-        
-        socket.onmessage = (event) => {
-            const listMessage = JSON.parse(
-                JSON.stringify(this.state.listMessage)
-            );
-            listMessage.push(...JSON.parse(event.data));
-
-            this.setState({
-                listMessage
-            });
-        };
-        
+                this.setState({
+                    listMessage
+                });
+            },
+        });
     }
 
     render() {

@@ -16,7 +16,9 @@ export default (props) => {
                 <div className='chat'>
                     <div className='chat__message-container'>
                         {
-                            props.listMessage.map((item) => {
+                            props.listMessage.sort((a, b) => {
+                                return a.time - b.time;
+                            }).map((item) => {
                                 return <Message {...item} key={uniqid()}/>
                             })
                         }

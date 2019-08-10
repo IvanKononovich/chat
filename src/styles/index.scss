@@ -136,6 +136,7 @@ body {
     height: 100vh;
     display: flex;
     justify-content: center;
+    align-items: flex-end;
     align-items: center;
 }
 
@@ -150,6 +151,8 @@ body {
         overflow-x: hidden;
         display: flex;
         flex-direction: column;
+        justify-content: flex-end;
+        align-items: flex-start;
         margin-bottom: 30px;
         border: 1px solid $color2;
         padding: 20px;
@@ -180,7 +183,7 @@ body {
         display: block;
     }
 
-    &:first-child {
+    &:last-child {
         margin-bottom: 0;
     }
 }
