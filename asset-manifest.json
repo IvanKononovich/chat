@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/IvanKononovich/chat/static/css/main.52f5439e.chunk.css",
-    "main.js": "/IvanKononovich/chat/static/js/main.20ba986e.chunk.js",
-    "main.js.map": "/IvanKononovich/chat/static/js/main.20ba986e.chunk.js.map",
-    "runtime~main.js": "/IvanKononovich/chat/static/js/runtime~main.c3eb94af.js",
-    "runtime~main.js.map": "/IvanKononovich/chat/static/js/runtime~main.c3eb94af.js.map",
-    "static/js/2.01b2f297.chunk.js": "/IvanKononovich/chat/static/js/2.01b2f297.chunk.js",
-    "static/js/2.01b2f297.chunk.js.map": "/IvanKononovich/chat/static/js/2.01b2f297.chunk.js.map",
-    "index.html": "/IvanKononovich/chat/index.html",
-    "precache-manifest.b0addb302066ba07d6975361cf17cf5b.js": "/IvanKononovich/chat/precache-manifest.b0addb302066ba07d6975361cf17cf5b.js",
-    "service-worker.js": "/IvanKononovich/chat/service-worker.js",
-    "static/css/main.52f5439e.chunk.css.map": "/IvanKononovich/chat/static/css/main.52f5439e.chunk.css.map"
+    "main.css": "/chat/static/css/main.52f5439e.chunk.css",
+    "main.js": "/chat/static/js/main.20ba986e.chunk.js",
+    "main.js.map": "/chat/static/js/main.20ba986e.chunk.js.map",
+    "runtime~main.js": "/chat/static/js/runtime~main.5f09d92b.js",
+    "runtime~main.js.map": "/chat/static/js/runtime~main.5f09d92b.js.map",
+    "static/js/2.01b2f297.chunk.js": "/chat/static/js/2.01b2f297.chunk.js",
+    "static/js/2.01b2f297.chunk.js.map": "/chat/static/js/2.01b2f297.chunk.js.map",
+    "index.html": "/chat/index.html",
+    "precache-manifest.ada6d8a889bc71e5b0cbbb126f9c149f.js": "/chat/precache-manifest.ada6d8a889bc71e5b0cbbb126f9c149f.js",
+    "service-worker.js": "/chat/service-worker.js",
+    "static/css/main.52f5439e.chunk.css.map": "/chat/static/css/main.52f5439e.chunk.css.map"
   }
 }
