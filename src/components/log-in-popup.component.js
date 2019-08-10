@@ -1,14 +1,14 @@
 import React from 'react';
 
 
-export default () => <>
+export default (props) => <>
     <div className='popup'>
         <form className='popup__form' action=''>
             <h2 className='popup__title'>Enter your name</h2>
 
-            <input className='popup__name' type='text' placeholder='Your name'/>
+            <input className='popup__name' type='text' placeholder='Your name' required/>
 
-            <button className='popup__button'>Ok</button>
+            <button className='popup__button' onClick={ props.onClick }>Ok</button>
         </form>
     </div>
 </>

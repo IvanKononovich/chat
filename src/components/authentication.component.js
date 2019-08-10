@@ -6,7 +6,15 @@ import LogInPopup from './log-in-popup.component';
 class Authentication extends Component {
     state = {
         isLogIn: window.localStorage.nickName,
-        // isLogIn: 'Ivan',
+    }
+
+    setNickNameEvent() {
+        const nickName = document.querySelector('.popup__name').value;
+        window.localStorage.setItem('nickName', nickName);
+
+        this.setState({
+            isLogIn: nickName,
+        })
     }
 
     render() {
@@ -14,7 +22,7 @@ class Authentication extends Component {
         let renderItem = <Header nickName={ nickName }/>;
 
         if (nickName === undefined) {
-            renderItem = <LogInPopup />
+            renderItem = <LogInPopup onClick={() => { this.setNickNameEvent() }}/>
         }
 
         return renderItem;
