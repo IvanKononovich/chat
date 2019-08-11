@@ -75,7 +75,10 @@ class WebSocketHelper {
         }
 
         if (!context.state.isActivePage) {
-            alert('new message')
+            flickerTitle.stop('Chat');
+            flickerTitle.start('Chat', 'New message +', 500);
+        } else {
+            flickerTitle.stop('Chat');
         }
 
         context.setState({
@@ -86,6 +89,27 @@ class WebSocketHelper {
         })
     }
 }
+
+let flickerTitle = () => {
+    let id = null;
+
+    return {
+        start(stateOne, stateTwo, delay) {
+            id = setInterval( () => {
+                if (document.title === stateOne) {
+                    document.title = stateTwo;
+                } else {
+                    document.title = stateOne;
+                }
+            }, delay)
+        },
+        stop(state) {
+            document.title = state;
+            clearInterval(id);
+        }
+    }
+}
+flickerTitle = flickerTitle();
 
 const webSocketHelper = new WebSocketHelper('ws://st-chat.shas.tel')
 
