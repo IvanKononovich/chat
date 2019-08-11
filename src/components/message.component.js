@@ -9,7 +9,7 @@ export default (props) => {
     let time = `${hours}:${minuts}`;
 
     return <> 
-        <div className='message'>
+        <div className={`message ${props.additionalClassName}`}>
             <div className='message__row'>
                 <span className='message__nick-name'>{ props.from }</span>
             </div>

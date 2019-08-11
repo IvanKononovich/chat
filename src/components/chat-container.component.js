@@ -18,7 +18,11 @@ export default (props) => {
                     <UploadMessageButton onClick={ props.upadteMore }/>
                     {
                         props.loadMessage.map((item) => {
-                            return <Message {...item} key={item.id}/>
+                            let additionalClassName = '';
+                            if (props.isLogIn === item.from) {
+                                additionalClassName = 'message_user';
+                            }
+                            return <Message {...item} key={item.id} additionalClassName={ additionalClassName }/>
                         })
                     }
                 </div>

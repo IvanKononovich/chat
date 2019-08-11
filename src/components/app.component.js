@@ -13,8 +13,8 @@ class App extends Component {
         oldMessage: [],
         loadMessage: [],
         connected: false,
-        requiredToDownload: 5,
-        sizeUploadMessage: 5,
+        requiredToDownload: 10,
+        sizeUploadMessage: 10,
         scrollBottom: false,
         firstRequest: true,
         isUpdate: false,
@@ -135,6 +135,7 @@ class App extends Component {
                 sendMessage={(event) => { this.sendMessage(event) }} 
                 loadMessage={ this.state.loadMessage }
                 scrollBottom={ this.state.scrollBottom }
+                isLogIn={ this.state.isLogIn }
             />
         </>;
 

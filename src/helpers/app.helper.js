@@ -76,17 +76,19 @@ class WebSocketHelper {
                 return b.time - a.time;
             });
 
-            loadMessage.unshift(...oldMessage.splice(0, requiredToDownload));
-            loadMessage.reverse();
-
             isScrollBottom = true;
         }
 
         if (!firstRequest && newData) {
-            isScrollBottom = newData[newData.length - 1].from === context.state.isLogIn;
+            try {
+                isScrollBottom = newData[newData.length - 1].from === context.state.isLogIn;
+            } catch {
+                isScrollBottom = false;
+            }
+
             loadMessage.push(...newData);
-        } else {
-            loadMessage.unshift(...oldMessage.splice(0, requiredToDownload));
+        } else  {
+            loadMessage.unshift(...oldMessage.splice(0, requiredToDownload).reverse());
         }
 
         if (!context.state.isActivePage) {
