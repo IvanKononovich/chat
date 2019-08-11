@@ -113,13 +113,15 @@ class App extends Component {
             })
         })
 
-        const chat = document.querySelector('.chat');
+        if (this.state.isLogIn) {
+            const chat = document.querySelector('.chat');
 
-        chat.addEventListener('scroll', () => {
-            this.setState({
-                scrollBottom: false,
+            chat.addEventListener('scroll', () => {
+                this.setState({
+                    scrollBottom: false,
+                })
             })
-        });
+        };
     }
 
     render() {
