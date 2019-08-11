@@ -3,17 +3,20 @@ import uniqid from 'uniqid';
 
 import Message from './message.component';
 import scrollToBottom from '../helpers/chat-container.helper';
-
+import UploadMessageButton from './upload-message-button.component';
 
 export default (props) => {
     useLayoutEffect(() => {
-        scrollToBottom('.chat');
+        if (props.scrollBottom) {
+            scrollToBottom('.chat');
+        }
     });
 
     return <>
         <main className='main'>
             <div className='chat'>
                 <div className='chat__message-container'>
+                    <UploadMessageButton onClick={ props.upadteMore }/>
                     {
                         props.loadMessage.map((item) => {
                             return <Message {...item} key={uniqid()}/>
@@ -24,7 +27,7 @@ export default (props) => {
                 <form className='chat__form' action=''>
                     <textarea className='chat__input-fields input' type='text' placeholder='Enter message' required></textarea>
 
-                    <button className='chat__send-button button' onClick={ props.onClick }>send</button>
+                    <button className='chat__send-button button' onClick={ props.sendMessage }>send</button>
                 </form>
             </div>
         </main>

@@ -41,23 +41,28 @@ class WebSocketHelper {
         }, interval);
     }
 
-    updateMessage(context, newData) {
+    updateMessage(context, newData, sizeUploadMessage = 0) {
         const loadMessage = context.state.loadMessage;
         let allMessage = context.state.allMessage;
+
         if (newData) allMessage.push(...newData);
+
         allMessage = allMessage.sort((a, b) => {
             return a.time - b.time;
         });
 
-        const requiredToDownload = context.state.requiredToDownload;
+        const requiredToDownload = context.state.requiredToDownload + sizeUploadMessage;
         let indexLastLoadMessage = context.state.indexLastLoadMessage;
+        
         if (indexLastLoadMessage === null) {
             indexLastLoadMessage = allMessage.length;
 
             context.setState({
-                indexLastLoadMessage
+                indexLastLoadMessage,
+                scrollBottom: true,
             });
         }
+        
         const from = indexLastLoadMessage - requiredToDownload;
         const to = indexLastLoadMessage;
 
@@ -73,6 +78,7 @@ class WebSocketHelper {
             allMessage,
             loadMessage,
             indexLastLoadMessage: indexLastLoadMessage - requiredToDownload,
+            scrollBottom: true,
         })
     }
 }

@@ -14,7 +14,9 @@ class App extends Component {
         loadMessage: [],
         connected: false,
         requiredToDownload: 10,
+        sizeUploadMessage: 10,
         indexLastLoadMessage: null,
+        scrollBottom: true,
     }
 
     setNickNameEvent() {
@@ -32,6 +34,16 @@ class App extends Component {
         this.setState({
             isLogIn: null,
         })
+    }
+
+    loadingMore() {
+        const sizeUploadMessage = this.state.sizeUploadMessage;
+        
+        webSocketHelper.updateMessage(this, null, sizeUploadMessage);
+
+        this.setState({
+            scrollBottom: false,
+        });
     }
 
     sendMessage(event) {
@@ -95,8 +107,10 @@ class App extends Component {
                 onClick={() => { this.logOut() }}
             />
             <ChatContainer 
-                onClick={(event) => { this.sendMessage(event) }} 
+                upadteMore={() => { this.upadteMore() }}
+                sendMessage={(event) => { this.sendMessage(event) }} 
                 loadMessage={ this.state.loadMessage }
+                scrollBottom={ this.state.scrollBottom }
             />
         </>;
 
