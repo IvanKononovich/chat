@@ -7,7 +7,7 @@ import scrollToBottom from '../helpers/chat-container.helper';
 
 export default (props) => {
     useLayoutEffect(() => {
-        scrollToBottom('#root');
+        scrollToBottom('.chat');
     });
 
     return <>

@@ -50,8 +50,8 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    overflow-y: scroll;
-    overflow-x: hidden;
+    // overflow-y: scroll;
+    // overflow-x: hidden;
 }
 
 .popup {
@@ -86,13 +86,13 @@ body {
 }
 
 .header {
-    position: fixed;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
+    // position: fixed;
+    // top: 0;
+    // left: 50%;
+    // transform: translateX(-50%);
     overflow: unset;
     padding: 0;
-    padding-top: 5px;
+    // padding-top: 5px;
     background-color: $color2;
     color: $color1;
     box-sizing: border-box;
@@ -102,6 +102,7 @@ body {
 
     &__title {
         font-size: 1em;
+        margin-bottom: 0;
     }
 
     &__description {
@@ -110,6 +111,7 @@ body {
     
     &__nickname {
         display: block;
+        padding: 0 10px;
         overflow: hidden;
         text-overflow: ellipsis;
         font-style: italic;
@@ -136,11 +138,6 @@ body {
             justify-content: flex-start;
         }
     }
-
-    &__description {
-        padding-right: 20px;
-    }
-    
 }
 
 .log-out {
@@ -168,22 +165,31 @@ body {
     padding: 0;
     max-width: 100%;
     width: 100%;
-    align-items: flex-end;
+    display: flex;
+    justify-content: center;
+    align-items: stretch;
     padding-bottom: 60px;
     box-sizing: border-box;
+    flex-grow: 1;
+    position: relative;
 }
 
 .chat {
+    position: absolute;
+    top: 0;
+    left: 0;
     padding: 0;
     max-width: 1200px;
+    max-height: 100%;
     width: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: scroll;
     box-shadow: none;
     background-color: $color4;
 
     &__message-container {
         border: none;
-        margin-bottom: 30px;
+        margin-bottom: 60px;
         padding: 20px;
     }
 
@@ -207,7 +213,6 @@ body {
     }
     
     &__form {
-        
         display: flex;
         justify-content: space-between;
         align-items: stretch;
@@ -224,12 +229,17 @@ body {
 
 .message {
     margin-bottom: 30px;
+    background-color: $color1;
+    padding: 10px;
+    box-sizing: border-box;
 
     &__nick-name {
+        max-width: 90%;
+        overflow: hidden;
+        text-overflow: ellipsis;
         font-size: 0.7em;
         font-style: italic;
         color: $color3;
-        margin-bottom: 10px;
         display: block;
     }
 
