@@ -36,7 +36,7 @@ class App extends Component {
         })
     }
 
-    loadingMore() {
+    upadteMore() {
         const sizeUploadMessage = this.state.sizeUploadMessage;
         
         webSocketHelper.updateMessage(this, null, sizeUploadMessage);
@@ -83,9 +83,7 @@ class App extends Component {
                 webSocketHelper.updateMessage(this, JSON.parse(event.data));
             },
         });
-    }
 
-    render() {
         window.addEventListener('blur', () => {
             this.setState({
                 isActivePage: false,
@@ -97,8 +95,9 @@ class App extends Component {
                 isActivePage: true,
             })
         })
+    }
 
-
+    render() {
         const nickName = this.state.isLogIn;
 
         let renderItem = <>

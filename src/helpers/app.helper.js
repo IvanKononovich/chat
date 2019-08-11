@@ -62,7 +62,7 @@ class WebSocketHelper {
                 scrollBottom: true,
             });
         }
-        
+
         const from = indexLastLoadMessage - requiredToDownload;
         const to = indexLastLoadMessage;
 
@@ -72,6 +72,10 @@ class WebSocketHelper {
             loadMessage.unshift(...allMessage.slice(from, to))
         } else {
             loadMessage.push(allMessage.pop());
+        }
+
+        if (!context.state.isActivePage) {
+            alert('new message')
         }
 
         context.setState({
