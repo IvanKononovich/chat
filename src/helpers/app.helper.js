@@ -40,8 +40,43 @@ class WebSocketHelper {
             this.initEvents(this.events, this.context);
         }, interval);
     }
+
+    updateMessage(context, newData) {
+        const loadMessage = context.state.loadMessage;
+        let allMessage = context.state.allMessage;
+        if (newData) allMessage.push(...newData);
+        allMessage = allMessage.sort((a, b) => {
+            return a.time - b.time;
+        });
+
+        const requiredToDownload = context.state.requiredToDownload;
+        let indexLastLoadMessage = context.state.indexLastLoadMessage;
+        if (indexLastLoadMessage === null) {
+            indexLastLoadMessage = allMessage.length;
+
+            context.setState({
+                indexLastLoadMessage
+            });
+        }
+        const from = indexLastLoadMessage - requiredToDownload;
+        const to = indexLastLoadMessage;
+
+        if (from < 0) return;
+
+        if (loadMessage.length < requiredToDownload) {
+            loadMessage.unshift(...allMessage.slice(from, to))
+        } else {
+            loadMessage.push(allMessage.pop());
+        }
+
+        context.setState({
+            allMessage,
+            loadMessage,
+            indexLastLoadMessage: indexLastLoadMessage - requiredToDownload,
+        })
+    }
 }
 
 const webSocketHelper = new WebSocketHelper('ws://st-chat.shas.tel')
 
-export  default webSocketHelper;
+export default webSocketHelper

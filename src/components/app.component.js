@@ -10,7 +10,11 @@ class App extends Component {
     state = { 
         isActivePage: true,
         isLogIn: window.localStorage.nickName,
-        listMessage: [],
+        allMessage: [],
+        loadMessage: [],
+        connected: false,
+        requiredToDownload: 10,
+        indexLastLoadMessage: null,
     }
 
     setNickNameEvent() {
@@ -33,7 +37,12 @@ class App extends Component {
     sendMessage(event) {
         event.preventDefault();
 
-        const messageText = document.querySelector('.chat__input-fields').value;
+        const messageInput = document.querySelector('.chat__input-fields');
+        const messageText = messageInput.value;
+
+        if (this.state.connected) {
+            messageInput.value = '';
+        }
 
         webSocketHelper.sendData(JSON.stringify({
             from: this.state.isLogIn,
@@ -47,20 +56,19 @@ class App extends Component {
                 console.log(error.message);
             },
             onopen: () => {
-                console.log('Соединение установлено.');
+                this.setState({
+                    connected: true,
+                });
             },
             onclose: () => {
+                this.setState({
+                    connected: false,
+                });
+
                 webSocketHelper.reconnecting(1000);
             },
             onmessage: (event) => {
-                const listMessage = JSON.parse(
-                    JSON.stringify(this.state.listMessage)
-                );
-                listMessage.push(...JSON.parse(event.data));
-
-                this.setState({
-                    listMessage
-                });
+                webSocketHelper.updateMessage(this, JSON.parse(event.data));
             },
         });
     }
@@ -88,7 +96,7 @@ class App extends Component {
             />
             <ChatContainer 
                 onClick={(event) => { this.sendMessage(event) }} 
-                listMessage={ this.state.listMessage }
+                loadMessage={ this.state.loadMessage }
             />
         </>;
 
