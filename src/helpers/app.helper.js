@@ -44,6 +44,4 @@ class WebSocketHelper {
 
 const webSocketHelper = new WebSocketHelper('ws://st-chat.shas.tel')
 
-export  {
-    webSocketHelper
-};
+export  default webSocketHelper;

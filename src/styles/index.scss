@@ -5,28 +5,12 @@ $color4: #ffffff;
 
 $trans-duration: 0.3s;
 
-
 body {
-    padding: 0;
     margin: 0;
-    background-color: $color1;
-    color: $color2;
+    background-color: $color4;
     font-family: 'Roboto', sans-serif;
-    font-size: 30px;
     line-height: 1.2;
-}
-
-#root {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-}
-.container {
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
+    font-size: 35px;
 }
 
 .input {
@@ -58,77 +42,16 @@ body {
     }
 }
 
-.header {
-    box-sizing: border-box;
-    width: 100%;
-    flex-grow: 0;
-    background-color: $color2;
-    color: $color1;
-    padding-top: 20px;
-    padding-bottom: 10px;
-
-    &__title {
-        margin: 0;
-        font-size: 1.5em;
-    }
-
-    &__column {
-        max-width: 50%;
-        width: 100%;
-        box-sizing: border-box;
-        justify-content: flex-end;
-        display: flex;
-        align-items: flex-start;
-        flex-wrap: wrap;
-        padding: 10px 20px;
-        padding-top: 0;
-        white-space: nowrap;
-
-        &:first-child {
-            justify-content: flex-start;
-        }
-
-        &:last-child {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            max-width: 100%;
-            width: 100%;
-        }
-    }
-
-    &__wrapper {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    &__nickname {
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        font-style: italic;
-        font-weight: bold;
-        color: $color3;
-    }
-}
-
-.log-out {
-    cursor: pointer;
-    transition: color $trans-duration;
-    border: none;
-    outline: none;
-    background-color: $color1;
-    color: $color2;
-    font-size: 1em;
-    width: 150px;
-    height: 45px;
-    padding: 0;
-
-    &:hover {
-        color: $color3;
-    }
+#root {
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }
 
 .popup {
@@ -140,6 +63,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    background-color: $color1;
 
     &__title {
         width: 100%;
@@ -161,38 +85,140 @@ body {
     }
 }
 
-.main {
-    flex-grow: 1;
-    width: 100%;
+.header {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: unset;
+    padding: 0;
+    padding-top: 5px;
+    background-color: $color2;
+    color: $color1;
     box-sizing: border-box;
-    padding: 0 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    max-width: 1200px;
+    width: 100%;
+    flex-grow: 0;
+
+    &__title {
+        font-size: 1em;
+    }
+
+    &__description {
+        font-size: 0.7em;
+    }
+    
+    &__nickname {
+        display: block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-style: italic;
+        font-weight: bold;
+        color: $color3;
+        font-size: 0.7em;
+    }
+
+    &__column {
+        min-width: 50%;
+        max-width: 100%;
+        width: 100%;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        flex-wrap: wrap;
+        padding: 5px 20px;
+        padding-top: 0;
+
+        &:last-child {
+            flex-basis: 100%;
+            padding: 0;
+            justify-content: flex-start;
+        }
+    }
+
+    &__description {
+        padding-right: 20px;
+    }
+    
+}
+
+.log-out {
+    cursor: pointer;
+    transition: color $trans-duration;
+    border: none;
+    outline: none;
+    background-color: $color1;
+    color: $color2;
+    height: 45px;
+    width: 100%;
+    text-transform: uppercase;
+    font-size: 0.5em;
+    padding: 0;
+    margin: 0;
+    margin-top: 5px;
+    display: block;
+
+    &:hover {
+        color: $color3;
+    }
+}
+
+.main {
+    padding: 0;
+    max-width: 100%;
+    width: 100%;
+    align-items: flex-end;
+    padding-bottom: 60px;
+    box-sizing: border-box;
 }
 
 .chat {
-    max-width: 500px;
+    padding: 0;
+    max-width: 1200px;
     width: 100%;
-    box-sizing: border-box;
-    margin: 0 auto;
+    overflow: hidden;
+    box-shadow: none;
     background-color: $color4;
-    box-shadow: 0 0 30px 5px $color2;
-    padding: 20px;
 
     &__message-container {
-        height: 500px;
-        overflow-y: scroll;
-        overflow-x: hidden;
+        border: none;
         margin-bottom: 30px;
-        border: 1px solid $color2;
         padding: 20px;
     }
 
     &__input-fields {
+        resize: vertical;
         font-size: 0.6em;
         resize: vertical;
-        max-height: 30vh;
+        max-height: 60px;
+        box-sizing: border-box;
+        flex-basis: 80%;
+        resize: none;
+        border: none;
+        padding: 10px;
+    }
+
+    &__send-button {
+        flex-basis: 20%;
+        font-size: 0.6em;
+        height: 60px;
+        margin: 0;
+    }
+    
+    &__form {
+        
+        display: flex;
+        justify-content: space-between;
+        align-items: stretch;
+        position: fixed;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        max-width: 1200px;
+        width: 100%;
+        background-color: $color4;
+        border-top: 1px solid $color2;
     }
 }
 
@@ -225,140 +251,6 @@ body {
     }
 }
 
-@media (max-width: 760px) {
-    body {
-        background-color: $color4;
-        font-size: 35px;
 
-        &::-webkit-scrollbar { 
-            background-color: $color4;
-        }
-        &::-webkit-scrollbar-button {  
-            background-color: $color4;
-         }
-        &::-webkit-scrollbar-track { 
-            background-color: $color4;
-        }
-        &::-webkit-scrollbar-track-piece { 
-            background-color: $color4;
-        }
-        &::-webkit-scrollbar-thumb { 
-            background-color: $color4;
-        }
-        &::-webkit-scrollbar-corner { 
-            background-color: $color4;
-        }
-        &::-webkit-resizer { 
-            background-color: $color4;
-        }
-    }
 
-    .log-out {
-        margin: 10px auto;
-        width: 100%;
-    }
-    
-    .header {
-        position: fixed;
-        overflow: unset;
-        padding: 0;
-        padding-top: 5px;
 
-        &__title {
-            font-size: 1em;
-        }
-
-        &__description {
-            font-size: 0.7em;
-        }
-        
-        &__nickname {
-            font-size: 0.7em;
-        }
-
-        &__column {
-            min-width: 50%;
-            max-width: 100%;
-            width: 100%;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
-            flex-wrap: wrap;
-            padding: 5px 20px;
-            padding-top: 0;
-
-            &:last-child {
-                flex-basis: 100%;
-                padding: 0;
-                justify-content: flex-start;
-            }
-        }
-
-        &__description {
-            padding-right: 20px;
-        }
-        
-    }
-
-    .log-out {
-        text-transform: uppercase;
-        font-size: 0.5em;
-        margin: 0;
-        margin-top: 5px;
-        display: block;
-    }
-
-    .main {
-        padding: 0;
-        max-width: 100%;
-        width: 100%;
-        align-items: flex-end;
-        padding-bottom: 60px;
-        box-sizing: border-box;
-    }
-    .chat {
-        padding: 0;
-        max-width: 100%;
-        width: 100%;
-        overflow: hidden;
-        box-shadow: none;
-        background-color: $color4;
-
-        &__message-container {
-            border: none;
-            // height: unset;
-            // margin-right: -20px;
-        }
-    
-        &__input-fields {
-            font-size: 0.6em;
-            resize: vertical;
-            max-height: 60px;
-            box-sizing: border-box;
-            flex-basis: 80%;
-            resize: none;
-            border: none;
-            padding: 10px;
-        }
-
-        &__send-button {
-            flex-basis: 20%;
-            font-size: 0.6em;
-            height: 60px;
-            margin: 0;
-        }
-        
-        &__form {
-            display: flex;
-            justify-content: space-between;
-            align-items: stretch;
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: $color4;
-            border-top: 1px solid $color2;
-        }
-    }
-}

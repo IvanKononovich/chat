@@ -3,7 +3,7 @@ import React, { Component} from 'react';
 import Header from  './header.component';
 import ChatContainer from './chat-container.component';
 import LogInPopup from './log-in-popup.component';
-import { webSocketHelper } from '../helpers/app.helper';
+import webSocketHelper from '../helpers/app.helper';
 
 
 class App extends Component {
