@@ -1,6 +1,6 @@
 $color1: #ECECEC;
 $color2: #101010;
-$color3: #4C953C;
+$color3: #7e8bd9;
 $color4: #ffffff;
 
 $trans-duration: 0.3s;
@@ -50,8 +50,6 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
-    // overflow-y: scroll;
-    // overflow-x: hidden;
 }
 
 .popup {
@@ -86,13 +84,8 @@ body {
 }
 
 .header {
-    // position: fixed;
-    // top: 0;
-    // left: 50%;
-    // transform: translateX(-50%);
     overflow: unset;
     padding: 0;
-    // padding-top: 5px;
     background-color: $color2;
     color: $color1;
     box-sizing: border-box;
@@ -144,6 +137,7 @@ body {
     cursor: pointer;
     transition: color $trans-duration;
     border: none;
+    border-bottom: 1px solid $color2;
     outline: none;
     background-color: $color1;
     color: $color2;
@@ -151,6 +145,7 @@ body {
     width: 100%;
     text-transform: uppercase;
     font-size: 0.5em;
+    font-weight: 700;
     padding: 0;
     margin: 0;
     margin-top: 5px;
@@ -159,6 +154,12 @@ body {
     &:hover {
         color: $color3;
     }
+}
+
+.button-upload {
+    margin: 0 auto 30px;
+    display: block;
+    width: 300px;
 }
 
 .main {

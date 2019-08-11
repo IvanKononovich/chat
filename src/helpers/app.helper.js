@@ -1,3 +1,24 @@
+let flickerTitle = () => {
+    let id = null;
+
+    return {
+        start(stateOne, stateTwo, delay) {
+            id = setInterval( () => {
+                if (document.title === stateOne) {
+                    document.title = stateTwo;
+                } else {
+                    document.title = stateOne;
+                }
+            }, delay)
+        },
+        stop(state) {
+            document.title = state;
+            clearInterval(id);
+        }
+    }
+}
+flickerTitle = flickerTitle();
+
 class WebSocketHelper {
     constructor(url) {
         this.url = url;
@@ -27,8 +48,9 @@ class WebSocketHelper {
         };;
     }
 
-    sendData(data) {
+    sendData(data, callback) {
         this.socket.send(data);
+        callback();
     }
 
     reconnecting(interval) {
@@ -42,36 +64,29 @@ class WebSocketHelper {
     }
 
     updateMessage(context, newData, sizeUploadMessage = 0) {
-        const loadMessage = context.state.loadMessage;
-        let allMessage = context.state.allMessage;
-
-        if (newData) allMessage.push(...newData);
-
-        allMessage = allMessage.sort((a, b) => {
-            return a.time - b.time;
-        });
-
+        let firstRequest = context.state.firstRequest;
+        let loadMessage = context.state.loadMessage;
+        let oldMessage = context.state.oldMessage;
+        let isScrollBottom = false;
         const requiredToDownload = context.state.requiredToDownload + sizeUploadMessage;
-        let indexLastLoadMessage = context.state.indexLastLoadMessage;
-        
-        if (indexLastLoadMessage === null) {
-            indexLastLoadMessage = allMessage.length;
 
-            context.setState({
-                indexLastLoadMessage,
-                scrollBottom: true,
+        if (firstRequest) {
+            oldMessage.push(...newData);
+            oldMessage = oldMessage.sort((a, b) => {
+                return b.time - a.time;
             });
+
+            loadMessage.unshift(...oldMessage.splice(0, requiredToDownload));
+            loadMessage.reverse();
+
+            isScrollBottom = true;
         }
 
-        const from = indexLastLoadMessage - requiredToDownload;
-        const to = indexLastLoadMessage;
-
-        if (from < 0) return;
-
-        if (loadMessage.length < requiredToDownload) {
-            loadMessage.unshift(...allMessage.slice(from, to))
+        if (!firstRequest && newData) {
+            isScrollBottom = newData[newData.length - 1].from === context.state.isLogIn;
+            loadMessage.push(...newData);
         } else {
-            loadMessage.push(allMessage.pop());
+            loadMessage.unshift(...oldMessage.splice(0, requiredToDownload));
         }
 
         if (!context.state.isActivePage) {
@@ -80,36 +95,17 @@ class WebSocketHelper {
         } else {
             flickerTitle.stop('Chat');
         }
-
+        
         context.setState({
-            allMessage,
+            oldMessage,
             loadMessage,
-            indexLastLoadMessage: indexLastLoadMessage - requiredToDownload,
-            scrollBottom: true,
+            requiredToDownload,
+            scrollBottom: isScrollBottom,   
+            firstRequest: false,         
         })
     }
 }
 
-let flickerTitle = () => {
-    let id = null;
-
-    return {
-        start(stateOne, stateTwo, delay) {
-            id = setInterval( () => {
-                if (document.title === stateOne) {
-                    document.title = stateTwo;
-                } else {
-                    document.title = stateOne;
-                }
-            }, delay)
-        },
-        stop(state) {
-            document.title = state;
-            clearInterval(id);
-        }
-    }
-}
-flickerTitle = flickerTitle();
 
 const webSocketHelper = new WebSocketHelper('ws://st-chat.shas.tel')
 

@@ -1,5 +1,4 @@
 import React, { useLayoutEffect } from 'react';
-import uniqid from 'uniqid';
 
 import Message from './message.component';
 import scrollToBottom from '../helpers/chat-container.helper';
@@ -19,7 +18,7 @@ export default (props) => {
                     <UploadMessageButton onClick={ props.upadteMore }/>
                     {
                         props.loadMessage.map((item) => {
-                            return <Message {...item} key={uniqid()}/>
+                            return <Message {...item} key={item.id}/>
                         })
                     }
                 </div>

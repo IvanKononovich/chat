@@ -10,13 +10,14 @@ class App extends Component {
     state = { 
         isActivePage: true,
         isLogIn: window.localStorage.nickName,
-        allMessage: [],
+        oldMessage: [],
         loadMessage: [],
         connected: false,
-        requiredToDownload: 10,
-        sizeUploadMessage: 10,
-        indexLastLoadMessage: null,
-        scrollBottom: true,
+        requiredToDownload: 5,
+        sizeUploadMessage: 5,
+        scrollBottom: false,
+        firstRequest: true,
+        isUpdate: false,
     }
 
     setNickNameEvent() {
@@ -38,12 +39,13 @@ class App extends Component {
 
     upadteMore() {
         const sizeUploadMessage = this.state.sizeUploadMessage;
-        
-        webSocketHelper.updateMessage(this, null, sizeUploadMessage);
+        const firstOldMessage = document.querySelector('.message');
 
         this.setState({
-            scrollBottom: false,
-        });
+            isUpdate: firstOldMessage,
+        })
+        
+        webSocketHelper.updateMessage(this, null, sizeUploadMessage);
     }
 
     sendMessage(event) {
@@ -52,14 +54,29 @@ class App extends Component {
         const messageInput = document.querySelector('.chat__input-fields');
         const messageText = messageInput.value;
 
-        if (this.state.connected) {
-            messageInput.value = '';
+        if (this.state.connected && messageText) {
+            webSocketHelper.sendData(
+                JSON.stringify({
+                    from: this.state.isLogIn,
+                    message: messageText,
+                }),
+                () => {
+                    messageInput.value = '';
+                }
+            );
         }
+    }
 
-        webSocketHelper.sendData(JSON.stringify({
-            from: this.state.isLogIn,
-            message: messageText,
-        }));
+    componentDidUpdate() {
+        if (this.state.isUpdate) {
+            const chat = document.querySelector('.chat');
+            const scroll = this.state.isUpdate.offsetTop - chat.getBoundingClientRect().top;
+            chat.scrollTop = scroll;
+
+            this.setState({
+                isUpdate: false,
+            })
+        }
     }
 
     componentDidMount() {
@@ -95,6 +112,14 @@ class App extends Component {
                 isActivePage: true,
             })
         })
+
+        const chat = document.querySelector('.chat');
+
+        chat.addEventListener('scroll', () => {
+            this.setState({
+                scrollBottom: false,
+            })
+        });
     }
 
     render() {
