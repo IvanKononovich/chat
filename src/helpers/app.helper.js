@@ -24,8 +24,6 @@ class WebSocketHelper {
         this.url = url;
         this.socket = new WebSocket(this.url);
         this.idReconnecting = null;
-
-        window.socket =  this.socket
     }
 
     initEvents(events, context) {

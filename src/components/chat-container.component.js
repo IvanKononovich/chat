@@ -2,7 +2,6 @@ import React, { useLayoutEffect } from 'react';
 
 import Message from './message.component';
 import scrollToBottom from '../helpers/chat-container.helper';
-import UploadMessageButton from './upload-message-button.component';
 
 export default (props) => {
     useLayoutEffect(() => {
@@ -15,7 +14,6 @@ export default (props) => {
         <main className='main'>
             <div className='chat'>
                 <div className='chat__message-container'>
-                    <UploadMessageButton onClick={ props.upadteMore }/>
                     {
                         props.loadMessage.map((item) => {
                             let additionalClassName = '';

@@ -67,11 +67,12 @@ class App extends Component {
         }
     }
 
-    componentDidUpdate() {
+    componentWillUpdate() {
         if (this.state.isUpdate) {
             const chat = document.querySelector('.chat');
             const scroll = this.state.isUpdate.offsetTop - chat.getBoundingClientRect().top;
             chat.scrollTop = scroll;
+
 
             this.setState({
                 isUpdate: false,
@@ -116,10 +117,22 @@ class App extends Component {
         if (this.state.isLogIn) {
             const chat = document.querySelector('.chat');
 
-            chat.addEventListener('scroll', () => {
+            chat.addEventListener('scroll', (event) => {
+                let scrollBottom = false;
+
+                if (chat.scrollTop >= chat.scrollHeight - chat.clientHeight) {
+                    scrollBottom = true;
+                } 
+                
+                if (chat.scrollTop === 0) {
+                    this.upadteMore();
+                }
+
                 this.setState({
                     scrollBottom: false,
-                })
+                    scrollBottom,
+                });
+                
             })
         };
     }
@@ -129,11 +142,12 @@ class App extends Component {
 
         let renderItem = <>
             <Header 
+                connected={ this.state.connected }
                 nickName={ nickName } 
                 onClick={() => { this.logOut() }}
             />
+
             <ChatContainer 
-                upadteMore={() => { this.upadteMore() }}
                 sendMessage={(event) => { this.sendMessage(event) }} 
                 loadMessage={ this.state.loadMessage }
                 scrollBottom={ this.state.scrollBottom }

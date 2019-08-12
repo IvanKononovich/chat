@@ -2,6 +2,8 @@ $color1: #ECECEC;
 $color2: #101010;
 $color3: #7e8bd9;
 $color4: #ffffff;
+$color5: green;
+$color6: red;
 
 $trans-duration: 0.3s;
 
@@ -95,7 +97,7 @@ body {
 
     &__title {
         font-size: 1em;
-        margin-bottom: 0;
+        margin: 10px 0;
     }
 
     &__description {
@@ -155,11 +157,18 @@ body {
         color: $color3;
     }
 }
+.connection-indicator {
+    font-size: 0.5em;
+    align-self: center;
+    margin-left: 30px;
 
-.button-upload {
-    margin: 0 auto 30px;
-    display: block;
-    width: 300px;
+    &_on {
+        color: $color5;
+    }
+
+    &_off {
+        color: $color6;
+    }
 }
 
 .main {
