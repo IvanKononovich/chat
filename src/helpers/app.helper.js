@@ -65,7 +65,6 @@ class WebSocketHelper {
         let firstRequest = context.state.firstRequest;
         let loadMessage = context.state.loadMessage;
         let oldMessage = context.state.oldMessage;
-        let isScrollBottom = false;
         const requiredToDownload = context.state.requiredToDownload + sizeUploadMessage;
 
         if (firstRequest) {
@@ -73,35 +72,34 @@ class WebSocketHelper {
             oldMessage = oldMessage.sort((a, b) => {
                 return b.time - a.time;
             });
-
-            isScrollBottom = true;
         }
 
         if (!firstRequest && newData) {
-            try {
-                isScrollBottom = newData[newData.length - 1].from === context.state.isLogIn;
-            } catch {
-                isScrollBottom = false;
-            }
-
             loadMessage.push(...newData);
         } else  {
             loadMessage.unshift(...oldMessage.splice(0, requiredToDownload).reverse());
         }
 
-        if (!context.state.isActivePage) {
+        if (!context.state.newMessage) {
+            const delay = 500;
             flickerTitle.stop('Chat');
-            flickerTitle.start('Chat', 'New message +', 500);
-        } else {
-            flickerTitle.stop('Chat');
-        }
+            flickerTitle.start('Chat', 'New message +', delay);
+
+            let id = setInterval(() => {
+                if (context.state.isActivePage) {
+                    flickerTitle.stop('Chat');
+                    clearInterval(id);
+                }
+            }, delay);
+
+        } 
         
         context.setState({
             oldMessage,
             loadMessage,
             requiredToDownload,
-            scrollBottom: isScrollBottom,   
-            firstRequest: false,         
+            firstRequest: false,  
+            newMessage: !context.state.isActivePage,
         })
     }
 }

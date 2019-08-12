@@ -9,13 +9,14 @@ import webSocketHelper from '../helpers/app.helper';
 class App extends Component {
     state = { 
         isActivePage: true,
+        newMessage: false,
         isLogIn: window.localStorage.nickName,
         oldMessage: [],
         loadMessage: [],
         connected: false,
         requiredToDownload: 10,
         sizeUploadMessage: 10,
-        scrollBottom: false,
+        scrollBottom: true,
         firstRequest: true,
         isUpdate: false,
     }
@@ -64,6 +65,10 @@ class App extends Component {
                     messageInput.value = '';
                 }
             );
+
+            this.setState({
+                scrollBottom: true,
+            })
         }
     }
 
@@ -117,7 +122,7 @@ class App extends Component {
         if (this.state.isLogIn) {
             const chat = document.querySelector('.chat');
 
-            chat.addEventListener('scroll', (event) => {
+            chat.addEventListener('scroll', () => {
                 let scrollBottom = false;
 
                 if (chat.scrollTop >= chat.scrollHeight - chat.clientHeight) {
@@ -129,7 +134,6 @@ class App extends Component {
                 }
 
                 this.setState({
-                    scrollBottom: false,
                     scrollBottom,
                 });
                 
