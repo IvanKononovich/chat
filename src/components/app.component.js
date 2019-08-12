@@ -39,14 +39,15 @@ class App extends Component {
     }
 
     upadteMore() {
-        const sizeUploadMessage = this.state.sizeUploadMessage;
-        const firstOldMessage = document.querySelector('.message');
-
-        this.setState({
-            isUpdate: firstOldMessage,
-        })
-        
-        webSocketHelper.updateMessage(this, null, sizeUploadMessage);
+        if (this.state.connected) {
+            const sizeUploadMessage = this.state.sizeUploadMessage;
+            const firstOldMessage = document.querySelector('.message');
+    
+            this.setState({
+                isUpdate: firstOldMessage,
+            })
+            webSocketHelper.updateMessage(this, null, sizeUploadMessage);
+        }
     }
 
     sendMessage(event) {
@@ -105,7 +106,7 @@ class App extends Component {
             onmessage: (event) => {
                 webSocketHelper.updateMessage(this, JSON.parse(event.data));
             },
-        });
+        }, this);
 
         window.addEventListener('blur', () => {
             this.setState({
@@ -122,8 +123,10 @@ class App extends Component {
         if (this.state.isLogIn) {
             const chat = document.querySelector('.chat');
 
-            chat.addEventListener('scroll', () => {
+            chat.addEventListener('scroll', (event) => {
                 let scrollBottom = false;
+
+                if (this.state.firstRequest) return;
 
                 if (chat.scrollTop >= chat.scrollHeight - chat.clientHeight) {
                     scrollBottom = true;

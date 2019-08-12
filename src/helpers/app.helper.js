@@ -23,10 +23,12 @@ class WebSocketHelper {
     constructor(url) {
         this.url = url;
         this.socket = new WebSocket(this.url);
+        window.socket = this.socket;
         this.idReconnecting = null;
+        this.idConnectionStatusCheck = null;
     }
 
-    initEvents(events, context) {
+    initEvents(events, context, reconnecting = false) {
         const { onerror, onopen, onclose, onmessage } = events;
         this.events = events;
         this.context = context;
@@ -35,6 +37,11 @@ class WebSocketHelper {
             onerror.call(context, event);
         }
         this.socket.onopen = (event) => {
+            context.setState({
+                oldMessage: [],
+                firstRequest: true,
+                scrollBottom: !reconnecting,
+            });
             clearInterval(this.idReconnecting);
             onopen.call(context, event);
         }
@@ -57,7 +64,7 @@ class WebSocketHelper {
         this.idReconnecting = setInterval(() => {
             this.socket = new WebSocket(this.url);
 
-            this.initEvents(this.events, this.context);
+            this.initEvents(this.events, this.context, true);
         }, interval);
     }
 
@@ -67,11 +74,14 @@ class WebSocketHelper {
         let oldMessage = context.state.oldMessage;
         const requiredToDownload = context.state.requiredToDownload + sizeUploadMessage;
 
+
         if (firstRequest) {
             oldMessage.push(...newData);
             oldMessage = oldMessage.sort((a, b) => {
                 return b.time - a.time;
             });
+
+            loadMessage = [];
         }
 
         if (!firstRequest && newData) {
