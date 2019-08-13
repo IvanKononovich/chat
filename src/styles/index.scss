@@ -1,9 +1,11 @@
-$color1: #ECECEC;
-$color2: #101010;
-$color3: #7e8bd9;
-$color4: #ffffff;
-$color5: green;
-$color6: red;
+$color1: #fdfdfe;
+$color2: #285473;
+$color3: #4a76a8;
+$color4: #edeef0;
+$color5: #04bf04;
+$color6: #d9100d;
+$color7: #000000;
+$color8: #ff6600;
 
 $trans-duration: 0.3s;
 
@@ -11,10 +13,38 @@ body {
     margin: 0;
     background-color: $color4;
     font-family: 'Roboto', sans-serif;
-    line-height: 1.2;
-    font-size: 35px;
+    line-height: 1;
+    font-size: 30px;
 }
 
+* {
+    &::-webkit-scrollbar { 
+        width: 10px; 
+        height: 3px;
+    }
+    &::-webkit-scrollbar-button {  
+        background-color: $color1; 
+        width: 0;
+        height: 0;
+    }
+    &::-webkit-scrollbar-track {  
+        background-color:  $color1; 
+    }
+    &::-webkit-scrollbar-track-piece { 
+        background-color:  $color1; 
+    }
+    &::-webkit-scrollbar-thumb { 
+        height: 0; 
+        background-color:  $color2; 
+        border-radius: 3px;
+    }
+    &::-webkit-scrollbar-corner { 
+        background-color:  $color2; 
+    }
+    &::-webkit-resizer { 
+        background-color:  $color2; 
+    }
+}
 .input {
     width: 100%;
     font-size: 1em;
@@ -22,17 +52,15 @@ body {
     outline: none;
     border: none;
     background-color: transparent;
-    border-bottom: 1px solid $color2;
     color: $color2;
 }
 
 .button {
-    transition: color $trans-duration;
     cursor: pointer;
     width: 100%;
     height: 50px;
     margin-top: 15px;
-    background-color: $color2;
+    background-color: $color3;
     color: $color1;
     outline: none;
     border: none;
@@ -40,7 +68,7 @@ body {
     text-transform: uppercase;
 
     &:hover {
-        color: $color3;
+        box-shadow: inset 0 0 15px 0 $color2;
     }
 }
 
@@ -96,8 +124,8 @@ body {
     flex-grow: 0;
 
     &__title {
-        font-size: 1em;
-        margin: 10px 0;
+        font-size: 0.8em;
+        margin: 5px 0;
     }
 
     &__description {
@@ -111,8 +139,8 @@ body {
         text-overflow: ellipsis;
         font-style: italic;
         font-weight: bold;
-        color: $color3;
         font-size: 0.7em;
+        color: $color8;
     }
 
     &__column {
@@ -137,12 +165,10 @@ body {
 
 .log-out {
     cursor: pointer;
-    transition: color $trans-duration;
     border: none;
-    border-bottom: 1px solid $color2;
     outline: none;
-    background-color: $color1;
-    color: $color2;
+    background-color: $color3;
+    color: $color1;
     height: 45px;
     width: 100%;
     text-transform: uppercase;
@@ -154,7 +180,7 @@ body {
     display: block;
 
     &:hover {
-        color: $color3;
+        box-shadow: inset 0 0 15px 0 $color2;
     }
 }
 .connection-indicator {
@@ -192,6 +218,7 @@ body {
     max-width: 1200px;
     max-height: 100%;
     width: 100%;
+    height: 100%;
     overflow-x: hidden;
     overflow-y: scroll;
     box-shadow: none;
@@ -200,7 +227,13 @@ body {
     &__message-container {
         border: none;
         margin-bottom: 60px;
-        padding: 20px;
+        padding: 15px 20px;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+
+        
     }
 
     &__input-fields {
@@ -213,6 +246,7 @@ body {
         resize: none;
         border: none;
         padding: 10px;
+        background-color: $color1;
     }
 
     &__send-button {
@@ -220,6 +254,7 @@ body {
         font-size: 0.6em;
         height: 60px;
         margin: 0;
+        background-color: $color3;
     }
     
     &__form {
@@ -233,12 +268,11 @@ body {
         max-width: 1200px;
         width: 100%;
         background-color: $color4;
-        border-top: 1px solid $color2;
     }
 }
 
 .message {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     background-color: $color1;
     padding: 10px;
     box-sizing: border-box;

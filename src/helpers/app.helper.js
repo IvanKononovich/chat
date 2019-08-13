@@ -23,7 +23,6 @@ class WebSocketHelper {
     constructor(url) {
         this.url = url;
         this.socket = new WebSocket(this.url);
-        window.socket = this.socket;
         this.idReconnecting = null;
         this.idConnectionStatusCheck = null;
     }
