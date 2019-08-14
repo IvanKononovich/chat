@@ -7,9 +7,11 @@ export default (props) => {
     const minuts = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
 
     let time = `${hours}:${minuts}`;
+    let additionalClassName = `message ${props.additionalClassName}`;
+    additionalClassName += props.unread ? 'message_unread' : '';
 
     return <> 
-        <div className={`message ${props.additionalClassName}`}>
+        <div className={additionalClassName}>
             <div className='message__row'>
                 <span className='message__nick-name'>{ props.from }</span>
             </div>

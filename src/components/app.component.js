@@ -69,7 +69,9 @@ class App extends Component {
 
             this.setState({
                 scrollBottom: true,
-            })
+            });
+
+            this.readMessages();
         }
     }
 
@@ -82,7 +84,7 @@ class App extends Component {
 
             this.setState({
                 isUpdate: false,
-            })
+            });
         }
     }
 
@@ -142,6 +144,17 @@ class App extends Component {
                 
             })
         };
+    }
+
+    readMessages() {
+        const unreadMessage = this.state.loadMessage.map((item) => {
+            item.unread = false;
+            return item;
+        });
+
+        this.setState({
+            loadMessage: unreadMessage,
+        });
     }
 
     render() {

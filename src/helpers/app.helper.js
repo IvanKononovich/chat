@@ -67,12 +67,20 @@ class WebSocketHelper {
         }, interval);
     }
 
-    updateMessage(context, newData, sizeUploadMessage = 0) {
-        let firstRequest = context.state.firstRequest;
-        let loadMessage = context.state.loadMessage;
-        let oldMessage = context.state.oldMessage;
-        const requiredToDownload = context.state.requiredToDownload + sizeUploadMessage;
+    static markMessagesUnread(listMessage) {
+        return listMessage.map((item) => {
+            item.unread = true;
+            return item;
+        });
+    }
 
+    updateMessage(context, newData, sizeUploadMessage = 0) {
+        const { isActivePage } = context.state;
+        let { firstRequest } = context.state;
+        let { loadMessage } = context.state;
+        let { oldMessage } = context.state;
+        const requiredToDownload = context.state.requiredToDownload + sizeUploadMessage;
+        
 
         if (firstRequest) {
             oldMessage.push(...newData);
@@ -84,6 +92,9 @@ class WebSocketHelper {
         }
 
         if (!firstRequest && newData) {
+            if (!isActivePage) {
+                newData = WebSocketHelper.markMessagesUnread(newData);
+            }
             loadMessage.push(...newData);
         } else  {
             loadMessage.unshift(...oldMessage.splice(0, requiredToDownload).reverse());

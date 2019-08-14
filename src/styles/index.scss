@@ -288,6 +288,32 @@ body {
         }
     }
 
+    &_unread {
+        position: relative;
+
+        .message__row {
+            position: relative;
+            z-index: 0;
+        }
+    }
+
+    &_unread:after {
+        content: 'unread';
+        position: absolute;
+        z-index: 10;
+        width: 100%;
+        height: 100%;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: #333333;
+        display: block;
+        font-size: 2em;
+        line-height: 1.2;
+        background-color: #333333d6;
+        text-align: center;
+    }
+
     &__nick-name {
         max-width: 100%;
         padding-right: 5px;

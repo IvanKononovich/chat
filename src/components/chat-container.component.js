@@ -18,7 +18,7 @@ export default (props) => {
                         props.loadMessage.map((item) => {
                             let additionalClassName = '';
                             if (props.isLogIn === item.from) {
-                                additionalClassName = 'message_user';
+                                additionalClassName += 'message_user';
                             }
                             return <Message {...item} key={item.id} additionalClassName={ additionalClassName }/>
                         })
