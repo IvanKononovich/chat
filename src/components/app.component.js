@@ -125,7 +125,7 @@ class App extends Component {
         if (this.state.isLogIn) {
             const chat = document.querySelector('.chat');
 
-            chat.addEventListener('scroll', (event) => {
+            chat.addEventListener('scroll', () => {
                 let scrollBottom = false;
 
                 if (this.state.firstRequest) return;
