@@ -1,5 +1,4 @@
-const LOG_IN = 'LOG_IN';
-const LOG_OUT = 'LOG_OUT';
+const CHANGE_STATE_AUTH = 'CHANGE_STATE_AUTH';
 const SWITCH_PAGE = 'SWITCH_PAGE';
 const LOAD_OLD_MESSAGE = 'LOAD_OLD_MESSAGE';
 const CHANGE_STATE_FIRST_REQUEST = 'CHANGE_STATE_FIRST_REQUEST';
@@ -10,17 +9,10 @@ const CHANGE_STATE_SCROLL_BOTTOM = 'CHANGE_STATE_SCROLL_BOTTOM';
 const CHANGE_STATE_IS_UPDATE = 'CHANGE_STATE_IS_UPDATE';
 
 
-function logIn(userName) {
+function changeStateAuth(userName) {
     return {
-        type: LOG_IN,
+        type: CHANGE_STATE_AUTH,
         payload: userName,
-    }
-}
-
-function logOut() {
-    return {
-        type: LOG_OUT,
-        payload: null,
     }
 }
 
@@ -81,8 +73,7 @@ function changeStateIsUpdate(state) {
 }
 
 export {
-    LOG_IN,
-    LOG_OUT,
+    CHANGE_STATE_AUTH,
     SWITCH_PAGE,
     LOAD_OLD_MESSAGE,
     CHANGE_STATE_FIRST_REQUEST,
@@ -91,8 +82,7 @@ export {
     CHANGE_STATE_CONNECTED,
     CHANGE_STATE_SCROLL_BOTTOM,
     CHANGE_STATE_IS_UPDATE,
-    logIn,
-    logOut,
+    changeStateAuth,
     switchPage,
     loadOldMessage,
     changeStateFirstRequest,

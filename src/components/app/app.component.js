@@ -1,6 +1,6 @@
 import React, { Component} from 'react';
 
-import Header from  './../header.component';
+import HeaderContainer from  '../header/header.container';
 import ChatContainer from './../chat-container.component';
 import LogInPopup from './../log-in-popup.component';
 import webSocketHelper from './../../helpers/app.helper';
@@ -11,13 +11,7 @@ export default class extends Component {
         const nickName = document.querySelector('.popup__name').value;
         window.localStorage.setItem('nickName', nickName);
 
-        this.props.logIn(nickName);
-    }
-
-    logOut() {
-        window.localStorage.clear();
-
-        this.props.logOut();
+        this.props.changeStateAuth(nickName);
     }
 
     upadteMore() {
@@ -127,10 +121,8 @@ export default class extends Component {
         const nickName = this.props.isLogIn;
 
         let renderItem = <>
-            <Header 
+            <HeaderContainer 
                 connected={ this.props.connected }
-                nickName={ nickName } 
-                onClick={() => { this.logOut() }}
             />
 
             <ChatContainer 

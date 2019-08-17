@@ -2,9 +2,9 @@ import React from 'react';
 import { connect } from 'react-redux';
 
 import App from './app.component';
+
 import { 
-    logIn,
-    logOut,
+    changeStateAuth,
     switchPage,
     loadOldMessage,
     changeStateFirstRequest,
@@ -18,27 +18,26 @@ import {
 function AppContainer(props) {
     return <>
         <App 
-            logIn={props.logIn}
-            logOut={props.logOut}
-            switchPage={props.switchPage}
-            loadOldMessage={props.loadOldMessage}
-            changeStateFirstRequest={props.changeStateFirstRequest}
-            updateUploadedMessages={props.updateUploadedMessages}
-            changeRequiredToDownload={props.changeRequiredToDownload}
-            changeStateConnected={props.changeStateConnected}
-            changeStateScrollBottom={props.changeStateScrollBottom}
-            changeStateIsUpdate={props.changeStateIsUpdate}
+            changeStateAuth={ props.changeStateAuth }
+            switchPage={ props.switchPage }
+            loadOldMessage={ props.loadOldMessage }
+            changeStateFirstRequest={ props.changeStateFirstRequest }
+            updateUploadedMessages={ props.updateUploadedMessages }
+            changeRequiredToDownload={ props.changeRequiredToDownload }
+            changeStateConnected={ props.changeStateConnected }
+            changeStateScrollBottom={ props.changeStateScrollBottom }
+            changeStateIsUpdate={ props.changeStateIsUpdate }
 
-            isActivePage={props.isActivePage}
-            isLogIn={props.isLogIn}
-            oldMessage={props.oldMessage}
-            uploadedMessages={props.uploadedMessages}
-            firstRequest={props.firstRequest}
-            requiredToDownload={props.requiredToDownload}
-            connected={props.connected}
-            sizeUploadMessage={props.sizeUploadMessage}
-            scrollBottom={props.scrollBottom}
-            isUpdate={props.isUpdate}
+            isActivePage={ props.isActivePage }
+            isLogIn={ props.isLogIn }
+            oldMessage={ props.oldMessage }
+            uploadedMessages={ props.uploadedMessages }
+            firstRequest={ props.firstRequest }
+            requiredToDownload={ props.requiredToDownload }
+            connected={ props.connected }
+            sizeUploadMessage={ props.sizeUploadMessage }
+            scrollBottom={ props.scrollBottom }
+            isUpdate={ props.isUpdate }
         />
     </>
 }
@@ -59,8 +58,7 @@ function mapStateToProps(store) {
 }
 
 const mapDispatchToProps = { 
-    logIn, 
-    logOut,
+    changeStateAuth,
     switchPage,
     loadOldMessage,
     changeStateFirstRequest,

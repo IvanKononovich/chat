@@ -1,6 +1,5 @@
 import { 
-    LOG_IN, 
-    LOG_OUT, 
+    CHANGE_STATE_AUTH,
     SWITCH_PAGE, 
     LOAD_OLD_MESSAGE, 
     CHANGE_STATE_FIRST_REQUEST,
@@ -14,17 +13,11 @@ import {
 
 export default (store, action) => {
     switch(action.type) {
-        case LOG_IN:
+        case CHANGE_STATE_AUTH:
             return {
                 ...store,
                 isLogIn: action.payload,
-            };
-
-        case LOG_OUT:
-            return {
-                ...store,
-                isLogIn: action.payload,
-            };
+            }
 
         case SWITCH_PAGE:
             return {
