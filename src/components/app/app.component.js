@@ -1,7 +1,7 @@
 import React, { Component} from 'react';
 
 import HeaderContainer from  '../header/header.container';
-import ChatContainer from './../chat-container.component';
+import ChatContainer from '../chat-container/chat-container.container';
 import LogInPopup from './../log-in-popup.component';
 import webSocketHelper from './../../helpers/app.helper';
 
@@ -121,15 +121,10 @@ export default class extends Component {
         const nickName = this.props.isLogIn;
 
         let renderItem = <>
-            <HeaderContainer 
-                connected={ this.props.connected }
-            />
+            <HeaderContainer />
 
             <ChatContainer 
                 sendMessage={(event) => { this.sendMessage(event) }} 
-                uploadedMessages={ this.props.uploadedMessages }
-                scrollBottom={ this.props.scrollBottom }
-                isLogIn={ this.props.isLogIn }
             />
         </>;
 
