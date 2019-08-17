@@ -1,28 +1,29 @@
-let flickerTitle = () => {
-    let id = null;
+// let flickerTitle = () => {
+//     let id = null;
 
-    return {
-        start(stateOne, stateTwo, delay) {
-            id = setInterval( () => {
-                if (document.title === stateOne) {
-                    document.title = stateTwo;
-                } else {
-                    document.title = stateOne;
-                }
-            }, delay)
-        },
-        stop(state) {
-            document.title = state;
-            clearInterval(id);
-        }
-    }
-}
-flickerTitle = flickerTitle();
+//     return {
+//         start(stateOne, stateTwo, delay) {
+//             id = setInterval( () => {
+//                 if (document.title === stateOne) {
+//                     document.title = stateTwo;
+//                 } else {
+//                     document.title = stateOne;
+//                 }
+//             }, delay)
+//         },
+//         stop(state) {
+//             document.title = state;
+//             clearInterval(id);
+//         }
+//     }
+// }
+// flickerTitle = flickerTitle();
 
 class WebSocketHelper {
     constructor(url) {
         this.url = url;
         this.socket = new WebSocket(this.url);
+        window.socket = this.socket;
         this.idReconnecting = null;
         this.idConnectionStatusCheck = null;
     }
@@ -36,11 +37,10 @@ class WebSocketHelper {
             onerror.call(context, event);
         }
         this.socket.onopen = (event) => {
-            context.setState({
-                oldMessage: [],
-                firstRequest: true,
-                scrollBottom: !reconnecting,
-            });
+            context.props.changeStateFirstRequest(true);
+            context.props.loadOldMessage([]);
+            context.props.changeStateScrollBottom(!reconnecting);
+
             clearInterval(this.idReconnecting);
             onopen.call(context, event);
         }
@@ -75,12 +75,12 @@ class WebSocketHelper {
     }
 
     updateMessage(context, newData, sizeUploadMessage = 0) {
-        const { isActivePage } = context.state;
-        let { firstRequest } = context.state;
-        let { loadMessage } = context.state;
-        let { oldMessage } = context.state;
-        const requiredToDownload = context.state.requiredToDownload + sizeUploadMessage;
-        
+        const { props } = context;
+        const { isActivePage } = props;
+        let { firstRequest } = props;
+        let { uploadedMessages } = props;
+        let { oldMessage } = props;
+        const requiredToDownload = props.requiredToDownload + sizeUploadMessage;
 
         if (firstRequest) {
             oldMessage.push(...newData);
@@ -88,39 +88,26 @@ class WebSocketHelper {
                 return b.time - a.time;
             });
 
-            loadMessage = [];
+            uploadedMessages = [];
         }
 
         if (!firstRequest && newData) {
             if (!isActivePage) {
                 newData = WebSocketHelper.markMessagesUnread(newData);
             }
-            loadMessage.push(...newData);
+            uploadedMessages.push(...newData);
         } else  {
-            loadMessage.unshift(...oldMessage.splice(0, requiredToDownload).reverse());
+            uploadedMessages.unshift(...oldMessage.splice(0, requiredToDownload).reverse());
         }
 
-        if (!context.state.newMessage) {
-            const delay = 500;
-            flickerTitle.stop('Chat');
-            flickerTitle.start('Chat', 'New message +', delay);
-
-            let id = setInterval(() => {
-                if (context.state.isActivePage) {
-                    flickerTitle.stop('Chat');
-                    clearInterval(id);
-                }
-            }, delay);
-
+        if (!isActivePage) {
+            document.title = 'New message +';
         } 
-        
-        context.setState({
-            oldMessage,
-            loadMessage,
-            requiredToDownload,
-            firstRequest: false,  
-            newMessage: !context.state.isActivePage,
-        })
+
+        props.changeStateFirstRequest(false);
+        props.loadOldMessage(oldMessage);
+        props.updateUploadedMessages(uploadedMessages);
+        props.changeRequiredToDownload(requiredToDownload);
     }
 }
 

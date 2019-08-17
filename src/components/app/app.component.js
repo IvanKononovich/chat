@@ -1,51 +1,32 @@
 import React, { Component} from 'react';
 
-import Header from  './header.component';
-import ChatContainer from './chat-container.component';
-import LogInPopup from './log-in-popup.component';
-import webSocketHelper from '../helpers/app.helper';
+import Header from  './../header.component';
+import ChatContainer from './../chat-container.component';
+import LogInPopup from './../log-in-popup.component';
+import webSocketHelper from './../../helpers/app.helper';
 
 
-class App extends Component {
-    state = { 
-        isActivePage: true,
-        newMessage: false,
-        isLogIn: window.localStorage.nickName,
-        oldMessage: [],
-        loadMessage: [],
-        connected: false,
-        requiredToDownload: 10,
-        sizeUploadMessage: 10,
-        scrollBottom: true,
-        firstRequest: true,
-        isUpdate: false,
-    }
-
+export default class extends Component {
     setNickNameEvent() {
         const nickName = document.querySelector('.popup__name').value;
         window.localStorage.setItem('nickName', nickName);
 
-        this.setState({
-            isLogIn: nickName,
-        })
+        this.props.logIn(nickName);
     }
 
     logOut() {
         window.localStorage.clear();
 
-        this.setState({
-            isLogIn: null,
-        })
+        this.props.logOut();
     }
 
     upadteMore() {
-        if (this.state.connected) {
-            const sizeUploadMessage = this.state.sizeUploadMessage;
+        if (this.props.connected) {
+            const sizeUploadMessage = this.props.sizeUploadMessage;
             const firstOldMessage = document.querySelector('.message');
     
-            this.setState({
-                isUpdate: firstOldMessage,
-            })
+            this.props.changeStateIsUpdate(firstOldMessage);
+
             webSocketHelper.updateMessage(this, null, sizeUploadMessage);
         }
     }
@@ -56,10 +37,10 @@ class App extends Component {
         const messageInput = document.querySelector('.chat__input-fields');
         const messageText = messageInput.value;
 
-        if (this.state.connected && messageText) {
+        if (this.props.connected && messageText) {
             webSocketHelper.sendData(
                 JSON.stringify({
-                    from: this.state.isLogIn,
+                    from: this.props.isLogIn,
                     message: messageText,
                 }),
                 () => {
@@ -67,24 +48,17 @@ class App extends Component {
                 }
             );
 
-            this.setState({
-                scrollBottom: true,
-            });
-
-            this.readMessages();
+            this.props.changeStateScrollBottom(true);
         }
     }
 
     componentWillUpdate() {
-        if (this.state.isUpdate) {
+        if (this.props.isUpdate) {
             const chat = document.querySelector('.chat');
-            const scroll = this.state.isUpdate.offsetTop - chat.getBoundingClientRect().top;
+            const scroll = this.props.isUpdate.offsetTop - chat.getBoundingClientRect().top;
             chat.scrollTop = scroll;
 
-
-            this.setState({
-                isUpdate: false,
-            });
+            this.props.changeStateIsUpdate(false);
         }
     }
 
@@ -94,14 +68,10 @@ class App extends Component {
                 console.log(error.message);
             },
             onopen: () => {
-                this.setState({
-                    connected: true,
-                });
+                this.props.changeStateConnected(true);
             },
             onclose: () => {
-                this.setState({
-                    connected: false,
-                });
+                this.props.changeStateConnected(false);
 
                 webSocketHelper.reconnecting(1000);
             },
@@ -111,24 +81,25 @@ class App extends Component {
         }, this);
 
         window.addEventListener('blur', () => {
-            this.setState({
-                isActivePage: false,
-            })
-        })
+            this.props.switchPage(false);
+        });
         
         window.addEventListener('focus', () => {
-            this.setState({
-                isActivePage: true,
-            })
-        })
+            this.props.switchPage(true);
+            
+            setTimeout(() => {
+                document.title = 'Chat';
+                this.readMessages();
+            }, 1500);
+        });
 
-        if (this.state.isLogIn) {
+        if (this.props.isLogIn) {
             const chat = document.querySelector('.chat');
 
             chat.addEventListener('scroll', () => {
                 let scrollBottom = false;
 
-                if (this.state.firstRequest) return;
+                if (this.props.firstRequest) return;
 
                 if (chat.scrollTop >= chat.scrollHeight - chat.clientHeight) {
                     scrollBottom = true;
@@ -138,40 +109,35 @@ class App extends Component {
                     this.upadteMore();
                 }
 
-                this.setState({
-                    scrollBottom,
-                });
-                
-            })
+                this.props.changeStateScrollBottom(scrollBottom);
+            });
         };
     }
 
     readMessages() {
-        const unreadMessage = this.state.loadMessage.map((item) => {
+        const unreadMessage = this.props.uploadedMessages.map((item) => {
             item.unread = false;
             return item;
         });
 
-        this.setState({
-            loadMessage: unreadMessage,
-        });
+        this.props.updateUploadedMessages(unreadMessage);
     }
 
     render() {
-        const nickName = this.state.isLogIn;
+        const nickName = this.props.isLogIn;
 
         let renderItem = <>
             <Header 
-                connected={ this.state.connected }
+                connected={ this.props.connected }
                 nickName={ nickName } 
                 onClick={() => { this.logOut() }}
             />
 
             <ChatContainer 
                 sendMessage={(event) => { this.sendMessage(event) }} 
-                loadMessage={ this.state.loadMessage }
-                scrollBottom={ this.state.scrollBottom }
-                isLogIn={ this.state.isLogIn }
+                uploadedMessages={ this.props.uploadedMessages }
+                scrollBottom={ this.props.scrollBottom }
+                isLogIn={ this.props.isLogIn }
             />
         </>;
 
@@ -182,5 +148,3 @@ class App extends Component {
         return renderItem
     }
 }
-
-export default App;

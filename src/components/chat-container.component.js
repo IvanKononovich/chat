@@ -15,7 +15,7 @@ export default (props) => {
             <div className='chat'>
                 <div className='chat__message-container'>
                     {
-                        props.loadMessage.map((item) => {
+                        props.uploadedMessages.map((item) => {
                             let additionalClassName = '';
                             if (props.isLogIn === item.from) {
                                 additionalClassName += 'message_user';
