@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import Chat from './chat-container.component';
 
 function ChatContainer(props) {
-    console.log(props)
     return <>
         <Chat 
             sendMessage={ props.sendMessage }
